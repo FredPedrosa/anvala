@@ -826,7 +826,7 @@ def boot_ega(
                     ord_sim = torch.zeros((b_cur, n_obs, p), device=dev, dtype=torch.float64)
                     for j, taus in enumerate(thresholds_list):
                         tau_t = torch.tensor(taus, device=dev, dtype=torch.float64)
-                        ord_sim[:, :, j] = torch.searchsorted(tau_t, z_sim[:, :, j]).to(torch.float64) + 1.0
+                        ord_sim[:, :, j] = torch.searchsorted(tau_t, z_sim[:, :, j].contiguous()).to(torch.float64) + 1.0
                     x_b = ord_sim
                 else:
                     x_b = z_sim
