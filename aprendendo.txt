@@ -1,2 +1,0 @@
-conda activate D:\conda_envs\psychometrics
-python
