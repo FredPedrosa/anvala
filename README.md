@@ -92,7 +92,7 @@ print(boot_ega.item_stability)
 
 If you use **anvala** in your research, please cite:
 
-> Pedrosa, F. G. (2026). *anvala: GPU-Accelerated Psychometrics and Structural Equation Modeling in Python* [Computer software]. Universidade Federal de Minas Gerais (UFMG). https://github.com/FredPedrosa/anvala
+> Pedrosa, F. G. (2026). *anvala: GPU-Accelerated Psychometrics and Structural Equation Modeling in Python* [Computer software]. Universidade Federal de Minas Gerais (UFMG). https://github.com/FredPedrosa/anvala. DOI: 10.5281/zenodo.24507587
 
 ## License
 
