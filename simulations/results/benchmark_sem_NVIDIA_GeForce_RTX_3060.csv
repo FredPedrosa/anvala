@@ -1,0 +1,6 @@
+hardware,task,N,B,R_lavaan_sec,anvala_CPU_sec,anvala_GPU_sec,speedup_GPU_vs_R,speedup_GPU_vs_CPU
+NVIDIA GeForce RTX 3060,SEM_Mediation_Bootstrap_BCa,400,250,,0.1376,0.2501,,0.55
+NVIDIA GeForce RTX 3060,SEM_Mediation_Bootstrap_BCa,400,500,,0.1243,0.2258,,0.55
+NVIDIA GeForce RTX 3060,SEM_Mediation_Bootstrap_BCa,400,1000,,0.1798,0.3371,,0.53
+NVIDIA GeForce RTX 3060,SEM_Mediation_Bootstrap_BCa,400,2000,,0.2938,0.5694,,0.52
+NVIDIA GeForce RTX 3060,SEM_Mediation_Bootstrap_BCa,400,5000,,0.6252,1.261,,0.5
