@@ -191,7 +191,7 @@ def run_bootega_benchmark(
             suppressPackageStartupMessages(library(EGAnet))
             df <- read.csv("{csv_path}")
             t0 <- proc.time()[["elapsed"]]
-            res <- bootEGA(df, iter = {b_rep}, type = "resampling", corr = "cor_auto", ncores = 1, progress = FALSE)
+            res <- bootEGA(df, iter = {b_rep}, type = "resampling", corr = "cor_auto", ncores = 1)
             elapsed <- proc.time()[["elapsed"]] - t0
             cat(sprintf("ELAPSED:%.6f\\n", elapsed))
             """
