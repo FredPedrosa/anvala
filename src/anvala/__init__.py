@@ -18,7 +18,17 @@ from anvala.reliability import ReliabilityResult, cronbach_alpha, htmt, reliabil
 
 __all__ = [
     "cfa",
+    "sem",
     "AnvalaFit",
+    "SEMFit",
+    "cfa_multigroup",
+    "measurement_invariance",
+    "compare_models",
+    "MultiGroupFit",
+    "InvarianceResult",
+    "predict",
+    "bootstrap_ci",
+    "BootstrapResult",
     "efa",
     "EFAFit",
     "dimtests",
