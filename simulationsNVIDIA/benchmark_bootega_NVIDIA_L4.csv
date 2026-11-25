@@ -1,0 +1,5 @@
+hardware,task,N,B,R_EGAnet_sec,anvala_CPU_sec,anvala_GPU_sec,speedup_GPU_vs_R,speedup_GPU_vs_CPU
+NVIDIA L4,bootEGA_12_items,400,100,,64.4787,3.4623,,18.62
+NVIDIA L4,bootEGA_12_items,400,250,,159.0955,5.3448,,29.77
+NVIDIA L4,bootEGA_12_items,400,500,,319.1174,10.1259,,31.52
+NVIDIA L4,bootEGA_12_items,400,1000,,637.5979,19.4593,,32.77

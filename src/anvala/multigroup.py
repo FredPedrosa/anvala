@@ -1060,9 +1060,10 @@ def cfa_multigroup(
             return 1.0 - (num / den) if den > 1e-12 else 1.0
 
         def _tli(tm, dfm, tb, dfb):
+            if dfm <= 0:
+                return 1.0
             rb, rm = tb / dfb, tm / dfm
             return (rb - rm) / (rb - 1.0) if abs(rb - 1.0) > 1e-12 else 1.0
-
         def _rmsea(tm, dfm):
             # Em multigrupo, RMSEA padrão do lavaan multiplica por sqrt(G)
             return float(np.sqrt(float(n_groups) * max(0.0, (tm - dfm) / (dfm * n_rm))))

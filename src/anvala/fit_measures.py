@@ -72,7 +72,7 @@ def compute_fit_triad(
     num_m_u = max(0.0, t_model - df_model)
     num_b_u = max(0.0, t_base - df_base, num_m_u)
     cfi_u = 1.0 - (num_m_u / num_b_u) if num_b_u > 0 else 1.0
-    tli_u = ((t_base / df_base) - (t_model / df_model)) / ((t_base / df_base) - 1.0)
+    tli_u = 1.0 if df_model <= 0 else ((t_base / df_base) - (t_model / df_model)) / ((t_base / df_base) - 1.0)
     rmsea_u = _rmsea_point(t_model, df_model, n_u, c_hat=1.0)
     rmsea_ci_u = _rmsea_ci(t_model, df_model, n_u, c_hat=1.0)
 
@@ -110,7 +110,7 @@ def compute_fit_triad(
     num_m_s = max(0.0, t_m_scaled - df_model)
     num_b_s = max(0.0, t_b_scaled - df_base, num_m_s)
     cfi_s = 1.0 - (num_m_s / num_b_s) if num_b_s > 0 else 1.0
-    tli_s = ((t_b_scaled / df_base) - (t_m_scaled / df_model)) / ((t_b_scaled / df_base) - 1.0)
+    tli_s = 1.0 if df_model <= 0 else ((t_b_scaled / df_base) - (t_m_scaled / df_model)) / ((t_b_scaled / df_base) - 1.0)
 
     if scaled_shifted:
         rmsea_s = _rmsea_point(t_m_scaled, df_model, n_u, c_hat=1.0)
@@ -153,7 +153,7 @@ def compute_fit_triad(
     num_b_r = max(0.0, c3_b * (t_b_r_scaled - df_base), num_m_r)
     cfi_r = 1.0 - (num_m_r / num_b_r) if num_b_r > 0 else 1.0
 
-    tli_r = 1.0 - ((c3_m * (t_m_r_scaled - df_model) / df_model) / (c3_b * (t_b_r_scaled - df_base) / df_base))
+    tli_r = 1.0 if df_model <= 0 else 1.0 - ((c3_m * (t_m_r_scaled - df_model) / df_model) / (c3_b * (t_b_r_scaled - df_base) / df_base))
     rmsea_r = _rmsea_point(t_m_r_base, df_model, n_r, c_hat=c3_m)
     rmsea_ci_r = _rmsea_ci(t_m_r_scaled, df_model, n_r, c_hat=c3_m)
 

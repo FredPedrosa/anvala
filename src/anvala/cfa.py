@@ -334,7 +334,7 @@ def cfa(
     def scipy_obj_and_grad(theta_np: np.ndarray):
         t_var = torch.tensor(theta_np, dtype=torch.float64, requires_grad=True)
         loss = objective_half_f(t_var)
-        if not torch.isfinite(loss):
+        if not torch.isfinite(loss) or not loss.requires_grad:
             return 1e12, np.zeros_like(theta_np)
         loss.backward()
         return float(loss.detach().numpy()), t_var.grad.detach().numpy().copy()
@@ -344,7 +344,7 @@ def cfa(
         spec.theta_init,
         method="BFGS",
         jac=True,
-        options={"gtol": 1e-10, "maxiter": 1000},
+        options={"gtol": 1e-7, "maxiter": 1000},
     )
 
     theta_hat = res.x
@@ -463,7 +463,7 @@ def cfa(
             s_inv = np.linalg.inv(s_mat)
             v_s = 0.5 * (d_mat.T @ np.kron(s_inv, s_inv) @ d_mat)
             tr_vs_gamma = np.trace(v_s @ gamma)
-            c_model = float((tr_vs_gamma - np.trace(h_inv @ b_meat)) / float(df_model))
+            c_model = 1.0 if df_model <= 0 else float((tr_vs_gamma - np.trace(h_inv @ b_meat)) / float(df_model))
 
             diag_idx = np.array([m for m, (r, c) in enumerate(zip(vech_r, vech_c)) if r == c])
             sigma_b_inv = np.diag(1.0 / np.diag(s_mat))
@@ -494,7 +494,7 @@ def cfa(
         spec=spec,
         estimator=est_upper,
         n_obs=n_obs,
-        converged=bool(res.success),
+        converged=bool(res.success or (np.isfinite(res.fun) and np.max(np.abs(res.jac)) < 1e-5)),
         theta_hat=theta_hat,
         se=se,
         vcov=vcov,
