@@ -1,31 +1,13 @@
 from __future__ import annotations
 
 import os
+import re
+import shutil
+import subprocess
 import sys
+import tempfile
 import time
 import warnings
-
-
-def _setup_r_windows() -> None:
-    """Registra o diretório bin/x64 do R no Windows antes de importar torch e rpy2."""
-    if sys.platform != "win32":
-        return
-    r_base = r"C:\Program Files\R"
-    if not os.path.isdir(r_base):
-        return
-    versions = sorted(os.listdir(r_base), reverse=True)
-    for ver in versions:
-        r_home = os.path.join(r_base, ver)
-        r_bin = os.path.join(r_home, "bin", "x64")
-        if os.path.isdir(r_bin):
-            os.environ.setdefault("R_HOME", r_home)
-            os.environ["PATH"] = r_bin + os.pathsep + os.environ.get("PATH", "")
-            if hasattr(os, "add_dll_directory"):
-                os.add_dll_directory(r_bin)
-            break
-
-
-_setup_r_windows()
 
 import numpy as np
 import pandas as pd
@@ -36,22 +18,51 @@ import anvala as av
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
+def _find_rscript() -> str | None:
+    """Localiza o executável Rscript no Windows ou Linux/Colab."""
+    if sys.platform == "win32":
+        cand = r"C:\Program Files\R\R-4.6.1\bin\x64\Rscript.exe"
+        if os.path.isfile(cand):
+            return cand
+        r_base = r"C:\Program Files\R"
+        if os.path.isdir(r_base):
+            for ver in sorted(os.listdir(r_base), reverse=True):
+                exe = os.path.join(r_base, ver, "bin", "x64", "Rscript.exe")
+                if os.path.isfile(exe):
+                    return exe
+    return shutil.which("Rscript")
+
+
+def _run_r_timed(r_code: str, rscript_exe: str | None) -> float:
+    """Executa um script R temporário e extrai o tempo interno medido via proc.time()."""
+    if not rscript_exe:
+        return np.nan
+    with tempfile.NamedTemporaryFile("w", suffix=".R", delete=False, encoding="utf-8") as tmp:
+        tmp.write(r_code)
+        r_path = tmp.name
+    try:
+        proc = subprocess.run(
+            [rscript_exe, "--vanilla", r_path],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=600,
+        )
+        if proc.returncode != 0:
+            return np.nan
+        m = re.search(r"ELAPSED:([0-9.]+)", proc.stdout)
+        return float(m.group(1)) if m else np.nan
+    except Exception:
+        return np.nan
+    finally:
+        if os.path.exists(r_path):
+            os.remove(r_path)
+
+
 def _sync_if_cuda(device: str) -> None:
     if device == "cuda" and torch.cuda.is_available():
         torch.cuda.synchronize()
-
-
-def _try_init_r():
-    try:
-        import rpy2.robjects as ro
-        from rpy2.robjects import pandas2ri
-        from rpy2.robjects.conversion import localconverter
-
-        has_lavaan = bool(ro.r('requireNamespace("lavaan", quietly = TRUE)')[0])
-        has_eganet = bool(ro.r('requireNamespace("EGAnet", quietly = TRUE)')[0])
-        return ro, pandas2ri, localconverter, has_lavaan, has_eganet
-    except Exception:
-        return None, None, None, False, False
 
 
 def run_sem_bootstrap_benchmark(
@@ -59,8 +70,8 @@ def run_sem_bootstrap_benchmark(
     n_obs: int = 400,
     seed: int = 42,
 ) -> pd.DataFrame:
-    """Compara o tempo de execução do bootstrap SEM (mediação) entre lavaan (R), anvala CPU e anvala GPU."""
-    ro, pandas2ri, localconverter, has_lavaan, _ = _try_init_r()
+    """Compara o tempo do bootstrap SEM (mediação) entre lavaan (R), anvala CPU e anvala GPU."""
+    rscript_exe = _find_rscript()
     gpu_label = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU_only"
 
     rng = np.random.default_rng(seed)
@@ -81,54 +92,60 @@ def run_sem_bootstrap_benchmark(
         _ = fit_py.bootstrap_ci(n_boot=20, method="bca", seed=seed, device="cuda")
         torch.cuda.synchronize()
 
-    if has_lavaan:
-        ro.r("library(lavaan)")
-        with localconverter(ro.default_converter + pandas2ri.converter):
-            ro.globalenv["df_r"] = ro.conversion.py2rpy(df)
-        ro.r("""
-            mod_r <- '
+    with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False, encoding="utf-8") as tmp_csv:
+        df.to_csv(tmp_csv.name, index=False)
+        csv_path = tmp_csv.name.replace("\\", "/")
+
+    rows = []
+    try:
+        for b_rep in b_list:
+            print(f"[SEM Bootstrap | {gpu_label}] Rodando B = {b_rep}...", flush=True)
+
+            r_code = f"""
+            if (!requireNamespace("lavaan", quietly = TRUE)) quit(status = 1)
+            suppressPackageStartupMessages(library(lavaan))
+            df <- read.csv("{csv_path}")
+            mod <- '
                 M ~ a*X
                 Y ~ b*M + c*X
                 indirect := a*b
                 total    := c + a*b
             '
-        """)
+            invisible(sem(mod, data = df, se = "standard"))
+            t0 <- proc.time()[["elapsed"]]
+            fit <- sem(mod, data = df, se = "bootstrap", bootstrap = {b_rep})
+            elapsed <- proc.time()[["elapsed"]] - t0
+            cat(sprintf("ELAPSED:%.6f\\n", elapsed))
+            """
+            t_r = _run_r_timed(r_code, rscript_exe)
 
-    rows = []
-    for b_rep in b_list:
-        print(f"[SEM Bootstrap | {gpu_label}] Rodando B = {b_rep}...")
-
-        if has_lavaan:
             t0 = time.perf_counter()
-            ro.r(f'fit_r <- sem(mod_r, data = df_r, se = "bootstrap", bootstrap = {b_rep})')
-            t_r = time.perf_counter() - t0
-        else:
-            t_r = np.nan
+            _ = fit_py.bootstrap_ci(n_boot=b_rep, method="bca", seed=seed, device="cpu")
+            t_cpu = time.perf_counter() - t0
 
-        t0 = time.perf_counter()
-        _ = fit_py.bootstrap_ci(n_boot=b_rep, method="bca", seed=seed, device="cpu")
-        t_cpu = time.perf_counter() - t0
+            if torch.cuda.is_available():
+                _sync_if_cuda("cuda")
+                t0 = time.perf_counter()
+                _ = fit_py.bootstrap_ci(n_boot=b_rep, method="bca", seed=seed, device="cuda")
+                _sync_if_cuda("cuda")
+                t_gpu = time.perf_counter() - t0
+            else:
+                t_gpu = np.nan
 
-        if torch.cuda.is_available():
-            _sync_if_cuda("cuda")
-            t0 = time.perf_counter()
-            _ = fit_py.bootstrap_ci(n_boot=b_rep, method="bca", seed=seed, device="cuda")
-            _sync_if_cuda("cuda")
-            t_gpu = time.perf_counter() - t0
-        else:
-            t_gpu = np.nan
-
-        rows.append({
-            "hardware": gpu_label,
-            "task": "SEM_Mediation_Bootstrap_BCa",
-            "N": n_obs,
-            "B": b_rep,
-            "R_lavaan_sec": round(t_r, 4) if np.isfinite(t_r) else np.nan,
-            "anvala_CPU_sec": round(t_cpu, 4),
-            "anvala_GPU_sec": round(t_gpu, 4) if np.isfinite(t_gpu) else np.nan,
-            "speedup_GPU_vs_R": round(t_r / t_gpu, 2) if np.isfinite(t_r) and np.isfinite(t_gpu) and t_gpu > 0 else np.nan,
-            "speedup_GPU_vs_CPU": round(t_cpu / t_gpu, 2) if np.isfinite(t_gpu) and t_gpu > 0 else np.nan,
-        })
+            rows.append({
+                "hardware": gpu_label,
+                "task": "SEM_Mediation_Bootstrap_BCa",
+                "N": n_obs,
+                "B": b_rep,
+                "R_lavaan_sec": round(t_r, 4) if np.isfinite(t_r) else np.nan,
+                "anvala_CPU_sec": round(t_cpu, 4),
+                "anvala_GPU_sec": round(t_gpu, 4) if np.isfinite(t_gpu) else np.nan,
+                "speedup_CPU_vs_R": round(t_r / t_cpu, 2) if np.isfinite(t_r) and t_cpu > 0 else np.nan,
+                "speedup_GPU_vs_R": round(t_r / t_gpu, 2) if np.isfinite(t_r) and np.isfinite(t_gpu) and t_gpu > 0 else np.nan,
+            })
+    finally:
+        if os.path.exists(csv_path):
+            os.remove(csv_path)
 
     return pd.DataFrame(rows)
 
@@ -136,15 +153,15 @@ def run_sem_bootstrap_benchmark(
 def run_bootega_benchmark(
     b_list: list[int] = [100, 250, 500, 1000],
     n_obs: int = 400,
-    n_items: int = 24,
+    n_items: int = 12,
     seed: int = 42,
 ) -> pd.DataFrame:
-    """Compara o tempo de execução do bootEGA (24 itens, 4 fatores) entre EGAnet (R), anvala CPU e anvala GPU."""
-    ro, pandas2ri, localconverter, _, has_eganet = _try_init_r()
+    """Compara o tempo do bootEGA (12 itens, 3 fatores) entre EGAnet (R), anvala CPU e anvala GPU."""
+    rscript_exe = _find_rscript()
     gpu_label = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU_only"
 
     rng = np.random.default_rng(seed)
-    n_factors = 4
+    n_factors = 3
     items_per_f = n_items // n_factors
     cov_f = np.full((n_factors, n_factors), 0.30)
     np.fill_diagonal(cov_f, 1.0)
@@ -160,46 +177,53 @@ def run_bootega_benchmark(
         _ = av.boot_ega(df, n_boot=10, boot_type="nonparametric", corr="pearson", seed=seed, device="cuda")
         torch.cuda.synchronize()
 
-    if has_eganet:
-        ro.r("library(EGAnet)")
-        with localconverter(ro.default_converter + pandas2ri.converter):
-            ro.globalenv["df_ega_r"] = ro.conversion.py2rpy(df)
+    with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False, encoding="utf-8") as tmp_csv:
+        df.to_csv(tmp_csv.name, index=False)
+        csv_path = tmp_csv.name.replace("\\", "/")
 
     rows = []
-    for b_rep in b_list:
-        print(f"[bootEGA {n_items} itens | {gpu_label}] Rodando B = {b_rep}...")
+    try:
+        for b_rep in b_list:
+            print(f"[bootEGA {n_items} itens | {gpu_label}] Rodando B = {b_rep}...", flush=True)
 
-        if has_eganet:
+            r_code = f"""
+            if (!requireNamespace("EGAnet", quietly = TRUE)) quit(status = 1)
+            suppressPackageStartupMessages(library(EGAnet))
+            df <- read.csv("{csv_path}")
+            t0 <- proc.time()[["elapsed"]]
+            res <- bootEGA(df, iter = {b_rep}, type = "resampling", corr = "cor_auto", ncores = 1, progress = FALSE)
+            elapsed <- proc.time()[["elapsed"]] - t0
+            cat(sprintf("ELAPSED:%.6f\\n", elapsed))
+            """
+            t_r = _run_r_timed(r_code, rscript_exe)
+
             t0 = time.perf_counter()
-            ro.r(f'res_r <- bootEGA(df_ega_r, iter = {b_rep}, type = "resampling", corr = "cor_auto", ncores = 4, progress = FALSE)')
-            t_r = time.perf_counter() - t0
-        else:
-            t_r = np.nan
+            _ = av.boot_ega(df, n_boot=b_rep, boot_type="nonparametric", corr="pearson", seed=seed, n_jobs=1, device="cpu")
+            t_cpu = time.perf_counter() - t0
 
-        t0 = time.perf_counter()
-        _ = av.boot_ega(df, n_boot=b_rep, boot_type="nonparametric", corr="pearson", seed=seed, n_jobs=4, device="cpu")
-        t_cpu = time.perf_counter() - t0
+            if torch.cuda.is_available():
+                _sync_if_cuda("cuda")
+                t0 = time.perf_counter()
+                _ = av.boot_ega(df, n_boot=b_rep, boot_type="nonparametric", corr="pearson", seed=seed, device="cuda")
+                _sync_if_cuda("cuda")
+                t_gpu = time.perf_counter() - t0
+            else:
+                t_gpu = np.nan
 
-        if torch.cuda.is_available():
-            _sync_if_cuda("cuda")
-            t0 = time.perf_counter()
-            _ = av.boot_ega(df, n_boot=b_rep, boot_type="nonparametric", corr="pearson", seed=seed, device="cuda")
-            _sync_if_cuda("cuda")
-            t_gpu = time.perf_counter() - t0
-        else:
-            t_gpu = np.nan
-
-        rows.append({
-            "hardware": gpu_label,
-            "task": f"bootEGA_{n_items}_items",
-            "N": n_obs,
-            "B": b_rep,
-            "R_EGAnet_sec": round(t_r, 4) if np.isfinite(t_r) else np.nan,
-            "anvala_CPU_sec": round(t_cpu, 4),
-            "anvala_GPU_sec": round(t_gpu, 4) if np.isfinite(t_gpu) else np.nan,
-            "speedup_GPU_vs_R": round(t_r / t_gpu, 2) if np.isfinite(t_r) and np.isfinite(t_gpu) and t_gpu > 0 else np.nan,
-            "speedup_GPU_vs_CPU": round(t_cpu / t_gpu, 2) if np.isfinite(t_gpu) and t_gpu > 0 else np.nan,
-        })
+            rows.append({
+                "hardware": gpu_label,
+                "task": f"bootEGA_{n_items}_items",
+                "N": n_obs,
+                "B": b_rep,
+                "R_EGAnet_sec": round(t_r, 4) if np.isfinite(t_r) else np.nan,
+                "anvala_CPU_sec": round(t_cpu, 4),
+                "anvala_GPU_sec": round(t_gpu, 4) if np.isfinite(t_gpu) else np.nan,
+                "speedup_GPU_vs_R": round(t_r / t_gpu, 2) if np.isfinite(t_r) and np.isfinite(t_gpu) and t_gpu > 0 else np.nan,
+                "speedup_GPU_vs_CPU": round(t_cpu / t_gpu, 2) if np.isfinite(t_gpu) and t_gpu > 0 else np.nan,
+            })
+    finally:
+        if os.path.exists(csv_path):
+            os.remove(csv_path)
 
     return pd.DataFrame(rows)
 
@@ -208,7 +232,7 @@ if __name__ == "__main__":
     os.makedirs("simulations/results", exist_ok=True)
     gpu_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU_only"
     tag = gpu_name.replace(" ", "_").replace("/", "-")
-    print(f"Dispositivo detectado: {gpu_name}\n")
+    print(f"Dispositivo detectado: {gpu_name} | Rscript: {_find_rscript()}\n", flush=True)
 
     df_sem = run_sem_bootstrap_benchmark()
     sem_path = f"simulations/results/benchmark_sem_{tag}.csv"
@@ -216,7 +240,7 @@ if __name__ == "__main__":
     print(f"\n=== Resultados Benchmark SEM Bootstrap ({sem_path}) ===")
     print(df_sem.to_string(index=False))
 
-    print("\n" + "=" * 60 + "\n")
+    print("\n" + "=" * 60 + "\n", flush=True)
 
     df_ega = run_bootega_benchmark()
     ega_path = f"simulations/results/benchmark_bootega_{tag}.csv"

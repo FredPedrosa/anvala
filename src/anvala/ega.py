@@ -676,8 +676,8 @@ def _ebic_glasso_batch_torch(
     lambda_min_ratio: float = 0.1,
 ) -> np.ndarray:
     """
-    Resolve EBICglasso em lote 3D [B, p, p] simultaneamente (GPU CUDA ou CPU).
-    Retorna matrizes de correlação parcial esparsas [B, p, p] em NumPy.
+    Resolve EBICglasso em lote 3D [B, p, p] simultaneamente (GPU CUDA ou CPU)
+    via ADMM matricial vetorizado (Boyd et al., 2011), sem la?os internos por vari?vel.
     """
     import torch
 
@@ -687,86 +687,66 @@ def _ebic_glasso_batch_torch(
 
     eye_p = torch.eye(p, device=dev, dtype=dtype).unsqueeze(0)
     off_mask = 1.0 - eye_p
-    lam_max_b = torch.amax(torch.abs(s_batch * off_mask), dim=(1, 2))  # [B]
+    tril_mask = torch.tril(torch.ones((p, p), device=dev, dtype=dtype), diagonal=-1).unsqueeze(0)
+
+    lam_max_b = torch.amax(torch.abs(s_batch * off_mask), dim=(1, 2))
     lam_max_b = torch.clamp(lam_max_b, min=1e-6)
     lam_min_b = lambda_min_ratio * lam_max_b
 
-    # Grade geométrica específica de cada amostra bootstrap: [n_lambda, B]
     t_grid = torch.linspace(0.0, 1.0, n_lambda, device=dev, dtype=dtype).unsqueeze(1)
     lambdas_grid = lam_max_b.unsqueeze(0) * ((lam_min_b / lam_max_b).unsqueeze(0) ** t_grid)
 
-    w = s_batch.clone()
-    theta = torch.linalg.inv(s_batch + 1e-4 * eye_p)
+    rho = 2.0
+    inv_rho = 1.0 / rho
+    four_over_rho = 4.0 / rho
+
+    theta = eye_p.expand(b_size, p, p).clone()
+    z = theta.clone()
+    u = inv_rho * (eye_p - s_batch)
+    s_scaled = inv_rho * s_batch
 
     best_ebic = torch.full((b_size,), float("inf"), device=dev, dtype=dtype)
     best_theta = theta.clone()
-
-    tril_r, tril_c = np.tril_indices(p, k=-1)
-    tril_r_t = torch.tensor(tril_r, device=dev, dtype=torch.long)
-    tril_c_t = torch.tensor(tril_c, device=dev, dtype=torch.long)
-
-    not_j_tensors = [
-        torch.tensor([k for k in range(p) if k != j], device=dev, dtype=torch.long)
-        for j in range(p)
-    ]
+    best_z = z.clone()
 
     log_n = float(np.log(float(n_obs)))
     four_gamma_log_p = 4.0 * gamma * float(np.log(float(p)))
 
     for l_idx in range(n_lambda):
-        lam_b = lambdas_grid[l_idx]  # [B]
-        lam_col = lam_b.unsqueeze(1)  # [B, 1]
+        thresh = (lambdas_grid[l_idx] * inv_rho).view(b_size, 1, 1)
 
-        for _ in range(12):
-            for j in range(p):
-                nj = not_j_tensors[j]
-                w_11 = w[:, nj][:, :, nj]  # [B, p-1, p-1]
-                s_12 = s_batch[:, nj, j]     # [B, p-1]
-                diag_w11 = torch.diagonal(w_11, dim1=1, dim2=2)  # [B, p-1]
+        for _ in range(25):
+            m = z - u - s_scaled
+            m = 0.5 * (m + m.transpose(1, 2))
+            eigvals, eigvecs = torch.linalg.eigh(m)
+            d_new = 0.5 * (eigvals + torch.sqrt(eigvals * eigvals + four_over_rho))
+            theta = torch.bmm(eigvecs * d_new.unsqueeze(1), eigvecs.transpose(1, 2))
 
-                t_jj = torch.clamp(theta[:, j, j], min=1e-8)
-                beta = -theta[:, nj, j] / t_jj.unsqueeze(1)  # [B, p-1]
-                resid = s_12 - torch.bmm(w_11, beta.unsqueeze(2)).squeeze(2)
+            v = theta + u
+            z_off = torch.sign(v) * torch.clamp(torch.abs(v) - thresh, min=0.0)
+            z = z_off * off_mask + v * eye_p
+            u = u + theta - z
 
-                for _ in range(15):
-                    for k in range(p - 1):
-                        b_old = beta[:, k]
-                        w_kk = diag_w11[:, k]
-                        r_k = resid[:, k] + w_kk * b_old
-                        b_new = torch.sign(r_k) * torch.clamp(torch.abs(r_k) - lam_b, min=0.0) / torch.clamp(w_kk, min=1e-8)
-                        diff_b = b_new - b_old
-                        beta[:, k] = b_new
-                        resid = resid - diff_b.unsqueeze(1) * w_11[:, :, k]
-
-                w_12 = torch.bmm(w_11, beta.unsqueeze(2)).squeeze(2)
-                w[:, nj, j] = w_12
-                w[:, j, nj] = w_12
-
-                new_t_jj = 1.0 / torch.clamp(w[:, j, j] - torch.sum(beta * w_12, dim=1), min=1e-8)
-                theta[:, j, j] = new_t_jj
-                t_12 = -beta * new_t_jj.unsqueeze(1)
-                theta[:, nj, j] = t_12
-                theta[:, j, nj] = t_12
-
-        theta = 0.5 * (theta + theta.transpose(1, 2))
-        sign, logdet = torch.linalg.slogdet(theta)
-        tr_st = torch.sum(s_batch * theta, dim=(1, 2))
+        theta_sym = 0.5 * (theta + theta.transpose(1, 2))
+        sign, logdet = torch.linalg.slogdet(theta_sym)
+        tr_st = torch.sum(s_batch * theta_sym, dim=(1, 2))
         loglik = 0.5 * float(n_obs) * (logdet - tr_st)
 
-        n_edges = torch.sum(torch.abs(theta[:, tril_r_t, tril_c_t]) > 1e-6, dim=1).to(dtype)
+        n_edges = torch.sum((torch.abs(z) > 1e-6).to(dtype) * tril_mask, dim=(1, 2))
         ebic_val = -2.0 * loglik + n_edges * log_n + n_edges * four_gamma_log_p
         valid = (sign > 0) & torch.isfinite(ebic_val) & (ebic_val < best_ebic)
 
         best_ebic = torch.where(valid, ebic_val, best_ebic)
-        best_theta = torch.where(valid.view(b_size, 1, 1), theta, best_theta)
+        valid_3d = valid.view(b_size, 1, 1)
+        best_theta = torch.where(valid_3d, theta_sym, best_theta)
+        best_z = torch.where(valid_3d, z, best_z)
 
     d_prec = torch.sqrt(torch.clamp(torch.diagonal(best_theta, dim1=1, dim2=2), min=1e-12))
     pcor = -best_theta / (d_prec.unsqueeze(2) * d_prec.unsqueeze(1))
     pcor = pcor * off_mask
-    pcor = torch.where(torch.abs(best_theta) <= 1e-6, torch.zeros_like(pcor), pcor)
+    pcor = torch.where(torch.abs(best_z) <= 1e-6, torch.zeros_like(pcor), pcor)
     pcor = 0.5 * (pcor + pcor.transpose(1, 2))
     return pcor.detach().cpu().numpy()
-
 
 def boot_ega(
     data: pd.DataFrame,

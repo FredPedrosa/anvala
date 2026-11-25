@@ -1,0 +1,5 @@
+hardware,task,N,B,R_EGAnet_sec,anvala_CPU_sec,anvala_GPU_sec,speedup_GPU_vs_R,speedup_GPU_vs_CPU
+NVIDIA GeForce RTX 3060,bootEGA_12_items,400,100,,50.3277,3.9609,,12.71
+NVIDIA GeForce RTX 3060,bootEGA_12_items,400,250,,125.1637,6.0261,,20.77
+NVIDIA GeForce RTX 3060,bootEGA_12_items,400,500,,253.5959,11.6546,,21.76
+NVIDIA GeForce RTX 3060,bootEGA_12_items,400,1000,,500.8294,22.6959,,22.07
