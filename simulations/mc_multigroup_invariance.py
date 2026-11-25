@@ -96,13 +96,14 @@ def run_partial_invariance_study(
     rng = np.random.default_rng(seed)
     lam2 = np.array([0.80, 0.75, 0.40, 0.75])
     nu2 = np.array([0.0, 0.0, 0.50, 0.0])
-    kappa2_true = 0.50
+    kappa2_dgp = 0.50
+    kappa2_true = 0.80 * kappa2_dgp  # 0.40 na m?trica do indicador marcador x1 (lambda_1 = 0.80)
 
     records = []
     for n_grp in n_list:
         print(f"[3C_Partial_Invariance_LatentMean] N_grupo = {n_grp} ({n_reps} réplicas)...", flush=True)
         for rep in range(n_reps):
-            df = _sim_two_groups(rng, n_grp, lam2=lam2, nu2=nu2, kappa2=kappa2_true)
+            df = _sim_two_groups(rng, n_grp, lam2=lam2, nu2=nu2, kappa2=kappa2_dgp)
 
             specs = [
                 ("Full_Scalar_Misspecified", None),

@@ -1,0 +1,13 @@
+condition,N_per_group,transition,mean_delta_chisq,reject_lrt_05,mean_delta_cfi,reject_chen_cfi_01,mean_delta_rmsea,reject_chen_rmsea_015
+3A_Full_Invariance_TypeI,150,metric,3.4319,0.09,-0.0014,0.06,0.0003,0.215
+3A_Full_Invariance_TypeI,150,scalar,3.0587,0.035,-0.0007,0.05,-0.0025,0.12
+3A_Full_Invariance_TypeI,150,strict,3.963,0.055,-0.0009,0.055,-0.0013,0.105
+3A_Full_Invariance_TypeI,300,metric,2.6708,0.05,-0.0002,0.0,-0.0047,0.095
+3A_Full_Invariance_TypeI,300,scalar,2.9655,0.04,-0.0002,0.005,-0.0017,0.115
+3A_Full_Invariance_TypeI,300,strict,3.9873,0.05,-0.0003,0.005,-0.0016,0.08
+3B_NonInvariance_Power,150,metric,11.8723,0.665,-0.0199,0.66,0.0533,0.745
+3B_NonInvariance_Power,150,scalar,33.1943,1.0,-0.0744,1.0,0.0767,0.99
+3B_NonInvariance_Power,150,strict,4.6474,0.09,-0.0016,0.15,-0.0237,0.0
+3B_NonInvariance_Power,300,metric,20.738,0.955,-0.0207,0.835,0.0683,0.94
+3B_NonInvariance_Power,300,scalar,61.4966,1.0,-0.072,1.0,0.0694,1.0
+3B_NonInvariance_Power,300,strict,4.7468,0.1,-0.0009,0.06,-0.024,0.0
