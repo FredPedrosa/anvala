@@ -6,3 +6,21 @@ dist/
 build/
 .venv/
 .DS_Store
+# LaTeX build artifacts & local manuscript drafts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+main*.tex
+main*.pdf
+tittle*
+references.bib
+Rplots.pdf
+*.zip
+simulationsNVIDIA/
