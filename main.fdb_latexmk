@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber main"] 1795645101.5674 "main.bcf" "main.bbl" "main" 1795697595.77422 0
-  "main.bcf" 1795697595 137738 2d4582542d660e5dcfd45c5f2c16dde6 "pdflatex"
-  "references.bib" 1795644910 11543 68df05e5559985fb3fd6de05149f656a ""
+["biber main"] 1795700478.01143 "main.bcf" "main.bbl" "main" 1795700486.85216 0
+  "main.bcf" 1795700486 137805 8372c51f07731032c674a4eb9d96105e "pdflatex"
+  "references.bib" 1795699987 11830 438f2dd630c4a82ffae69be9e191e0f4 ""
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1795697592.55732 "d:/dev/psychometrics_pkg/main.tex" "main.pdf" "main" 1795697595.77514 0
+["pdflatex"] 1795700483.5686 "d:/dev/psychometrics_pkg/main.tex" "main.pdf" "main" 1795700486.853 0
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc" 1795576689 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/adobe/courier/pcrb8r.tfm" 1795642104 1292 3059476c50a24578715759f22652f3d0 ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/adobe/courier/pcrb8t.tfm" 1795642104 1384 87406e4336af44af883a035f17f319d9 ""
@@ -247,12 +247,12 @@
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1795642128 341372 13fad3cc26dab11fd8a3e1435e1c1e80 ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-var/web2c/pdftex/pdflatex.fmt" 1795641726 2315296 2503ba1376e35237a5f73f5ede163375 ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf.cnf" 1795576639 903 164c5b127cd0d6dc91abad2f62421ea2 ""
-  "d:/dev/psychometrics_pkg/main.tex" 1795697585 180939 21a34832a5e8e985705f9aa19e47cf73 ""
-  "main.aux" 1795697595 16303 9984d46eab692e4a398aca165c288ef3 "pdflatex"
-  "main.bbl" 1795645103 136409 079e708f17732468fd6ca116a565bf3c "biber main"
-  "main.out" 1795697595 3125 294d37740226478f0de309a268b66b86 "pdflatex"
-  "main.run.xml" 1795697595 2427 67bc1ecde8af2725b4d83249ac6fd798 "pdflatex"
-  "main.tex" 1795697585 180939 21a34832a5e8e985705f9aa19e47cf73 ""
+  "d:/dev/psychometrics_pkg/main.tex" 1795700473 181658 f7e46d5f7b199fb279e2414d7068ac87 ""
+  "main.aux" 1795700486 16546 a2ca3ddb317e595c003286462600ed45 "pdflatex"
+  "main.bbl" 1795700480 139391 1b46e1945f97b47234182379d0bab945 "biber main"
+  "main.out" 1795700486 3125 294d37740226478f0de309a268b66b86 "pdflatex"
+  "main.run.xml" 1795700486 2427 67bc1ecde8af2725b4d83249ac6fd798 "pdflatex"
+  "main.tex" 1795700473 181658 f7e46d5f7b199fb279e2414d7068ac87 ""
   (generated)
   "main.aux"
   "main.bcf"

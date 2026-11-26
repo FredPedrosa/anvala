@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.11.25)  26 NOV 2026 09:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.11.25)  26 NOV 2026 10:41
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1023,12 +1023,7 @@ Overfull \hbox (12.64478pt too wide) in paragraph at lines 199--199
 [10]
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
 (Font)              Font shape `T1/pcr/m/sl' tried instead on input line 236.
- [11]
-Overfull \hbox (215.73557pt too wide) in paragraph at lines 293--313
- [][] 
- []
-
-[12] [13]
+ [11] [12] [13]
 Overfull \hbox (58.23978pt too wide) in paragraph at lines 330--360
  [][] 
  []
@@ -1044,7 +1039,7 @@ Overfull \hbox (38.76613pt too wide) in paragraph at lines 435--455
  []
 
 
-Overfull \hbox (64.58678pt too wide) in paragraph at lines 483--484
+Overfull \hbox (64.58678pt too wide) in paragraph at lines 484--485
 \T1/ptm/m/n/12 (-20) packages---\T1/pcr/m/n/12 lavaan \T1/ptm/m/n/12 (-20) (v0.7-2), \T1/pcr/m/n/12 semTools \T1/ptm/m/n/12 (-20) (v0.5-9), \T1/pcr/m/n/12 EGAnet \T1/ptm/m/n/12 (-20) (v2.4.1), and \T1/pcr/m/n/12 BifactorIndicesCalculator
  []
 
@@ -1060,18 +1055,18 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 35061 strings out of 468859
- 661610 string characters out of 5449732
- 1729611 words of memory out of 5000000
- 63422 multiletter control sequences out of 15000+600000
- 695308 words of font info for 311 fonts, out of 8000000 for 9000
+ 35071 strings out of 468859
+ 661871 string characters out of 5449732
+ 1729679 words of memory out of 5000000
+ 63428 multiletter control sequences out of 15000+600000
+ 695438 words of font info for 313 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  92i,12n,104p,2351b,5052s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (26 pages, 350374 bytes).
+Output written on main.pdf (26 pages, 350901 bytes).
 PDF statistics:
- 489 PDF objects out of 1000 (max. 8388607)
- 412 compressed objects within 5 object streams
- 111 named destinations out of 1000 (max. 500000)
+ 492 PDF objects out of 1000 (max. 8388607)
+ 415 compressed objects within 5 object streams
+ 112 named destinations out of 1000 (max. 500000)
  62061 words of extra memory for PDF output out of 74296 (max. 10000000)
 

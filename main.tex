@@ -285,33 +285,33 @@ Fourth, Study 3 evaluated \texttt{anvala.multigroup} across $R = 1{,}000$ replic
 Table~\ref{tab:parity} summarizes side-by-side numerical comparisons between R reference packages and \texttt{anvala} across canonical continuous, robust, structural, ordinal, multi-group, bifactor, and network psychometric models. Across all normal-theory ML and ordinal WLSMV factor models, parameter estimates, polychoric thresholds, and bifactor indices agreed with \texttt{lavaan} and \texttt{BifactorIndicesCalculator} within $1.11 \times 10^{-16}$ to $1.99 \times 10^{-6}$. Robust sandwich standard errors and Yuan--Bentler/Satorra--Bentler scaled test statistics in \texttt{MLR} and multi-group invariance models agreed within $1.75 \times 10^{-5}$ to $1.81 \times 10^{-5}$, while the full Political Democracy structural equation model ($N = 75$) matched focal path estimates and fit indices to five decimal places ($\max|\Delta| = 1.10 \times 10^{-4}$ across all free parameters and standard errors). In network psychometrics, \texttt{anvala} recovered the exact same three-factor community partition as \texttt{EGAnet}, matched the Total Entropy Fit Index to machine precision ($\Delta = 8.88 \times 10^{-16}$), and reproduced the full $9 \times 9$ \texttt{EBICglasso} partial correlation matrix within $\max|\Delta| = 2.54 \times 10^{-6}$.
 
 \begin{table}[htbp]
-\centering
-\caption{Stage A Numerical Parity Benchmark Comparing R Reference Packages and \texttt{anvala} Across Canonical Models}
-\label{tab:parity}
-\footnotesize
-\setlength{\tabcolsep}{3.8pt}
-\begin{tabular}{llllllr}
-\toprule
-Domain & Dataset & R Reference & Metric & R Value & \texttt{anvala} Value & $\max|\Delta|$ \\
-\midrule
-CFA (\texttt{ML}) & HS1939 ($N=301$) & \texttt{lavaan} 0.7-2 & $\lambda(\text{visual} \sim \text{x2})$ & 0.55350 & 0.55350 & $8.93 \times 10^{-7}$ \\
- & & & $\chi^2$ ($\text{df}=24$) & 85.30552 & 85.30552 & $8.93 \times 10^{-7}$ \\
- & & & CFI / RMSEA & 0.93056 / 0.09212 & 0.93056 / 0.09212 & $8.93 \times 10^{-7}$ \\
-CFA (\texttt{MLR}) & HS1939 ($N=301$) & \texttt{lavaan} 0.7-2 & Sandwich SE ($\text{x2}$) & 0.13208 & 0.13208 & $1.81 \times 10^{-5}$ \\
- & & & Scaled $\chi^2$ / Robust CFI & 87.13160 / 0.92986 & 87.13159 / 0.92986 & $1.81 \times 10^{-5}$ \\
-SEM (\texttt{ML}) & PolDem ($N=75$) & \texttt{lavaan} 0.7-2 & $\text{dem65} \sim \text{dem60}$ (SE) & 0.83734 (0.09835) & 0.83734 (0.09835) & $1.10 \times 10^{-4}$ \\
- & & & $\chi^2$ / CFI & 38.12522 / 0.99537 & 38.12522 / 0.99537 & $1.10 \times 10^{-4}$ \\
-Ordinal (\texttt{WLSMV}) & HS1939-Ord & \texttt{lavaan} 0.7-2 & $\lambda(\text{visual} \sim \text{x2})$ & 0.52992 & 0.52992 & $6.87 \times 10^{-8}$ \\
- & & & Scaled $\chi^2$ / Robust CFI & 83.38528 / 0.91790 & 83.38528 / 0.91790 & $1.99 \times 10^{-6}$ \\
-Multi-Group (\texttt{MLR}) & HS1939 ($G=2$) & \texttt{lavaan} 0.7-2 & Scalar Scaled $\chi^2$ / CFI & 166.74822 / 0.88115 & 166.74820 / 0.88115 & $1.75 \times 10^{-5}$ \\
-Bifactor Indices & HS1939 ($N=301$) & \texttt{BifactorIndices} & ECV / PUC / $\omega_H$ & 0.34444 / 0.75000 / 0.54680 & 0.34444 / 0.75000 / 0.54680 & $1.11 \times 10^{-16}$ \\
-Network (\texttt{EGA}) & HS1939 ($N=301$) & \texttt{EGAnet} 2.4.1 & Dimensions ($K$) / TEFI & 3 / $-5.15041$ & 3 / $-5.15041$ & $8.88 \times 10^{-16}$ \\
- & & & $9 \times 9$ Partial Corr. Matrix & 36 unique edges & 36 unique edges & $2.54 \times 10^{-6}$ \\
-\bottomrule
-\end{tabular}
-\vspace{4pt}
-\par\noindent\footnotesize\textit{Note.} $\max|\Delta|$ denotes the maximum absolute discrepancy across the full vector of parameters, standard errors, thresholds, or fit indices in each benchmark module. HS1939 = Holzinger--Swineford (1939) dataset; PolDem = Bollen's (1989) Political Democracy dataset.
-\end{table}
+    \centering
+    \caption{Stage A Numerical Parity Benchmark Comparing R Reference Packages and \texttt{anvala} Across Canonical Models}
+    \label{tab:parity}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{llllllr}
+    \toprule
+    Domain & Dataset & R Reference & Metric & R Value & \texttt{anvala} Value & $\max|\Delta|$ \\
+    \midrule
+    CFA (\texttt{ML}) & HS1939 ($N=301$) & \texttt{lavaan} 0.7-2 & $\lambda(\text{visual} \sim \text{x2})$ & 0.55350 & 0.55350 & $8.93 \times 10^{-7}$ \\
+     & & & $\chi^2$ ($\text{df}=24$) & 85.30552 & 85.30552 & $8.93 \times 10^{-7}$ \\
+     & & & CFI / RMSEA & 0.93056 / 0.09212 & 0.93056 / 0.09212 & $8.93 \times 10^{-7}$ \\
+    CFA (\texttt{MLR}) & HS1939 ($N=301$) & \texttt{lavaan} 0.7-2 & Sandwich SE ($\text{x2}$) & 0.13208 & 0.13208 & $1.81 \times 10^{-5}$ \\
+     & & & Scaled $\chi^2$ / Robust CFI & 87.13160 / 0.92986 & 87.13159 / 0.92986 & $1.81 \times 10^{-5}$ \\
+    SEM (\texttt{ML}) & PolDem ($N=75$) & \texttt{lavaan} 0.7-2 & $\text{dem65} \sim \text{dem60}$ (SE) & 0.83734 (0.09835) & 0.83734 (0.09835) & $1.10 \times 10^{-4}$ \\
+     & & & $\chi^2$ / CFI & 38.12522 / 0.99537 & 38.12522 / 0.99537 & $1.10 \times 10^{-4}$ \\
+    Ordinal (\texttt{WLSMV}) & HS1939-Ord & \texttt{lavaan} 0.7-2 & $\lambda(\text{visual} \sim \text{x2})$ & 0.52992 & 0.52992 & $6.87 \times 10^{-8}$ \\
+     & & & Scaled $\chi^2$ / Robust CFI & 83.38528 / 0.91790 & 83.38528 / 0.91790 & $1.99 \times 10^{-6}$ \\
+    Multi-Group (\texttt{MLR}) & HS1939 ($G=2$) & \texttt{lavaan} 0.7-2 & Scalar Scaled $\chi^2$ / CFI & 166.74822 / 0.88115 & 166.74820 / 0.88115 & $1.75 \times 10^{-5}$ \\
+    Bifactor Indices & HS1939 ($N=301$) & \texttt{BifactorIndices} & ECV / PUC / $\omega_H$ & 0.34444 / 0.75000 / 0.54680 & 0.34444 / 0.75000 / 0.54680 & $1.11 \times 10^{-16}$ \\
+    Network (\texttt{EGA}) & HS1939 ($N=301$) & \texttt{EGAnet} 2.4.1 & Dimensions ($K$) / TEFI & 3 / $-5.15041$ & 3 / $-5.15041$ & $8.88 \times 10^{-16}$ \\
+     & & & $9 \times 9$ Partial Corr. Matrix & 36 unique edges & 36 unique edges & $2.54 \times 10^{-6}$ \\
+    \bottomrule
+    \end{tabular}%
+    }
+    \vspace{4pt}
+    \par\noindent\footnotesize\textit{Note.} $\max|\Delta|$ denotes the maximum absolute discrepancy across the full vector of parameters, standard errors, thresholds, or fit indices in each benchmark module. HS1939 = Holzinger--Swineford (1939) dataset; PolDem = Bollen's (1989) Political Democracy dataset.
+    \end{table}
 
 \subsection{Study 1: Computational Scalability and CPU--GPU Crossover Benchmarks}
 
@@ -357,7 +357,7 @@ Observed mediation & 3 & 250 & 5.23 & 3.09 & 0.16 & 0.24 & $0.68\times$ & $21.88
 \bottomrule
 \end{tabular}
 \vspace{4pt}
-\par\noindent\footnotesize\textit{Note.} Workstation timings recorded on Intel Core i5-10400F (6 physical cores, PyTorch \texttt{num\_threads = 6}) and NVIDIA GeForce RTX 3060 (12 GB VRAM). Multi-core R timings used \texttt{parallel = "snow", ncpus = 6} in \texttt{lavaan} and \texttt{ncores = 6} in \texttt{EGAnet::bootEGA}. On a cloud NVIDIA L4 GPU, $B = 5{,}000$ path mediation completed in $0.79\text{ s}$ and $B = 1{,}000$ parametric \texttt{boot\_ega} ($p = 12$) completed in $19.46\text{ s}$ ($32.77\times$ faster than CPU).
+\par\noindent\footnotesize\textit{Note.} Workstation timings recorded on Intel Core i5-10400F (6 physical cores, PyTorch \texttt{num\_threads = 6}) and NVIDIA GeForce RTX 3060 (12 GB VRAM). Multi-core R timings used \texttt{parallel = "snow", ncpus = 6} in \texttt{lavaan} and \texttt{ncores = 6} in \texttt{EGAnet::bootEGA}. Studies 1C and 1D on the workstation used nonparametric resampling (\texttt{boot\_type = "nonparametric"}), whereas the cloud NVIDIA L4 benchmark ($B = 5{,}000$ path mediation in $0.79\text{ s}$; $B = 1{,}000$ \texttt{boot\_ega} at $p = 12$ in $19.46\text{ s}$, $32.77\times$ faster than CPU) used parametric resampling. Each R baseline ran inside a fresh \texttt{Rscript} subprocess; fixed package loading, PSOCK cluster initialization, and bytecode JIT compilation overhead ($\approx 6\text{--}9\text{ s}$) accounts for the flat scaling of \texttt{EGAnet::bootEGA} across small $B \in \{100, 250\}$.
 \end{table}
 
 \subsection{Study 2: Monte Carlo Parameter Recovery and Interval Coverage}
@@ -422,9 +422,9 @@ Condition / Estimator & Parameter & True & $N$ & Mean Est. & Rel. Bias (\%) & Em
 
 \subsection{Study 3: Multi-Group Measurement Invariance and Latent Mean Recovery}
 
-Table~\ref{tab:study3ab} summarizes hierarchical invariance test performance across Study 3A (full invariance) and Study 3B (non-invariance on item \texttt{x3}). Under full invariance (Study 3A), Satorra--Bentler scaled $\Delta\chi^2$ tests maintained empirical Type I error rates close to the nominal $\alpha = .05$ level across metric, scalar, and strict constraints. Practical fit criteria based on $\Delta\mathrm{CFI} < -.010$ \parencite{chen2007} exhibited low false-positive rates at $N_g = 150$ and near-zero false-positive rates at $N_g = 300$, whereas $\Delta\mathrm{RMSEA} > .015$ over-rejected invariant models in small samples, consistent with known small-sample sampling variability of RMSEA in low-degrees-of-freedom models.
+Table~\ref{tab:study3ab} summarizes hierarchical invariance test performance across Study 3A (full invariance) and Study 3B (non-invariance on item \texttt{x3}). Under full invariance (Study 3A), Satorra--Bentler scaled $\Delta\chi^2$ tests maintained well-controlled empirical Type I error rates across metric, scalar, and strict constraints at both $N_g = 150$ ($.061$, $.042$, and $.051$, respectively) and $N_g = 300$ ($.059$, $.042$, and $.061$), falling well within Bradley's \parencite{bradley1978} liberal acceptability bounds ($[.025, .075]$).. Practical fit criteria based on $\Delta\mathrm{CFI} < -.010$ \parencite{chen2007} exhibited low false-positive rates at $N_g = 150$ ($.043$--$.052$) and near-zero false-positive rates at $N_g = 300$ ($.003$--$.008$), whereas $\Delta\mathrm{RMSEA} > .015$ over-rejected invariant models across both sample sizes ($.080$--$.175$), consistent with known small-sample sampling variability of RMSEA in low-degrees-of-freedom models.
 
-When item \texttt{x3} violated metric and scalar invariance in Group 2 (Study 3B; $\Delta\lambda_3 = -0.30$, $\Delta\nu_3 = +0.50$), statistical power to detect loading non-invariance via $\Delta\chi^2$ reached $.665$ at $N_g = 150$ and $.955$ at $N_g = 300$, while scalar non-invariance was detected with $1.000$ power at both sample sizes. Because the strict invariance model in Study 3B was nested within the misspecified full scalar model, constraining invariant residual variances yielded minor spillover rejection rates ($.090$ and $.100$), confirming specificity to the violated loading and intercept parameters.
+When item \texttt{x3} violated metric and scalar invariance in Group 2 (Study 3B; $\Delta\lambda_3 = -0.30$, $\Delta\nu_3 = +0.50$), statistical power to detect loading non-invariance via $\Delta\chi^2$ reached $.734$ at $N_g = 150$ and $.944$ at $N_g = 300$, while scalar non-invariance was detected with $.999$ and $1.000$ power, respectively. Because the strict invariance model in Study 3B was nested within the misspecified full scalar model, constraining invariant residual variances yielded minor spillover rejection rates ($.096$ and $.141$), confirming specificity to the violated loading and intercept parameters.
 
 \begin{table}[htbp]
 \centering
@@ -436,19 +436,19 @@ When item \texttt{x3} violated metric and scalar invariance in Group 2 (Study 3B
 \toprule
 Condition & $N_g$ & Transition & $\overline{\Delta\chi^2}$ & $\Delta\chi^2$ ($p < .05$) & $\overline{\Delta\mathrm{CFI}}$ & $\Delta\mathrm{CFI} < -.010$ & $\overline{\Delta\mathrm{RMSEA}}$ & $\Delta\mathrm{RMSEA} > .015$ \\
 \midrule
-3A: Full Invariance & 150 & Metric & 3.43 & .090 & $-.001$ & .060 & .000 & .215 \\
- & & Scalar & 3.06 & .035 & $-.001$ & .050 & $-.003$ & .120 \\
- & & Strict & 3.96 & .055 & $-.001$ & .055 & $-.001$ & .105 \\
- & 300 & Metric & 2.67 & .050 & $-.000$ & .000 & $-.005$ & .095 \\
- & & Scalar & 2.97 & .040 & $-.000$ & .005 & $-.002$ & .115 \\
- & & Strict & 3.99 & .050 & $-.000$ & .005 & $-.002$ & .080 \\
+3A: Full Invariance & 150 & Metric & 3.19 & .061 & $-.001$ & .044 & $-.002$ & .175 \\
+ & & Scalar & 3.06 & .042 & $-.001$ & .043 & $-.002$ & .113 \\
+ & & Strict & 4.09 & .051 & $-.001$ & .052 & $-.001$ & .132 \\
+ & 300 & Metric & 3.11 & .059 & $-.001$ & .004 & $-.001$ & .149 \\
+ & & Scalar & 2.87 & .042 & $-.000$ & .003 & $-.002$ & .080 \\
+ & & Strict & 4.02 & .061 & $-.000$ & .008 & $-.001$ & .096 \\
 \addlinespace
-3B: Non-Invariance & 150 & Metric & 11.87 & .665 & $-.020$ & .660 & .053 & .745 \\
- & & Scalar & 33.19 & 1.000 & $-.074$ & 1.000 & .077 & .990 \\
- & & Strict & 4.65 & .090 & $-.002$ & .150 & $-.024$ & .000 \\
- & 300 & Metric & 20.74 & .955 & $-.021$ & .835 & .068 & .940 \\
- & & Scalar & 61.50 & 1.000 & $-.072$ & 1.000 & .069 & 1.000 \\
- & & Strict & 4.75 & .100 & $-.001$ & .060 & $-.024$ & .000 \\
+3B: Non-Invariance & 150 & Metric & 12.25 & .734 & $-.020$ & .728 & .061 & .833 \\
+ & & Scalar & 31.92 & .999 & $-.071$ & .999 & .071 & .980 \\
+ & & Strict & 4.65 & .096 & $-.002$ & .135 & $-.023$ & .000 \\
+ & 300 & Metric & 20.39 & .944 & $-.020$ & .824 & .072 & .962 \\
+ & & Scalar & 63.07 & 1.000 & $-.074$ & 1.000 & .073 & .997 \\
+ & & Strict & 5.39 & .141 & $-.002$ & .060 & $-.024$ & .000 \\
 \bottomrule
 \end{tabular}
 \vspace{4pt}
@@ -476,6 +476,7 @@ Partial Scalar (\texttt{group\_partial}) & 300 & 0.410 & $+2.53$ & 0.073 & 0.079
 \vspace{4pt}
 \par\noindent\footnotesize\textit{Note.} True population latent mean difference $\kappa_2 = 0.400$ on the \texttt{x1} marker metric ($R = 1{,}000$ replications per cell, $\mathrm{MCSE} = 0.69\%$). Partial scalar models freed \texttt{F1 =\textasciitilde{} x3} and \texttt{x3 \textasciitilde{} 1} across groups.
 \end{table}
+
 
 % ==================== DISCUSSION ====================
 \section{Discussion}
@@ -615,7 +616,7 @@ Existing native Python packages do not yet provide the breadth or numerical fide
 
 A second practical bottleneck concerns the computational cost of resampling procedures within Python. Contemporary psychometric standards routinely require bias-corrected and accelerated (\texttt{BCa}) bootstrap confidence intervals for indirect effects \parencite{efron1987} and parametric or nonparametric bootstrap EGA \parencite{christensen2021} across regularization grids. Executing hundreds or thousands of correlated model fits sequentially inside a Python interpreter is slow, restricting Monte Carlo simulation designs and large-scale item pool screening.
 
-To address these needs, this paper introduces \texttt{anvala} (\textit{Analysis of Latent Variables}; v0.1.0; \parencite{pedrosa2026}), an open-source Python library built on PyTorch \parencite{paszke2019} that provides an idiomatic, R-equivalent psychometric engine within the Python scientific stack, augmented by graphics processing unit (GPU) tensor parallelization for resampling workloads. Specifically, our contributions are threefold:
+To address these needs, this paper introduces \texttt{anvala} (\textit{Analysis of Latent Variables}; v0.1.0; \citeauthor{pedrosa2026}, \citeyear{pedrosa2026}), an open-source Python library built on PyTorch \parencite{paszke2019} that provides an idiomatic, R-equivalent psychometric engine within the Python scientific stack, augmented by graphics processing unit (GPU) tensor parallelization for resampling workloads. Specifically, our contributions are threefold:
 \begin{enumerate}
     \item \textbf{Unified estimation and numerical parity with R:} We present a native Python architecture supporting \texttt{lavaan} model syntax across continuous (\texttt{ML}, \texttt{MLR}), ordinal (\texttt{WLSMV}), multi-group invariance, bifactor, and network psychometric (\texttt{EGA}, \texttt{UVA}) models using double-precision (\texttt{float64}) automatic differentiation, verifying numerical agreement with R reference packages across canonical datasets (Sections 2.1 and 3.1).
     \item \textbf{Hybrid CPU--GPU parallelization and transparent scaling:} We detail a tensor-batching architecture that executes single-model optimization on the CPU to avoid kernel-launch latency while dispatching \texttt{BCa} bootstrap resampling (\texttt{bootstrap\_ci}) and Alternating Direction Method of Multipliers (ADMM) precision-matrix grids (\texttt{boot\_ega}) to CUDA-enabled GPUs, explicitly characterizing inherent algorithmic differences between Python/PyTorch tensors and compiled C/Fortran R backends (Sections 2.2, 2.3, and 4).
@@ -1004,7 +1005,7 @@ Partial Scalar (\texttt{group\_partial}) & 300 & 0.410 & $+2.53$ & 0.073 & 0.079
 % ==================== DISCUSSION ====================
 \section{Discussion}
 
-The present work introduced \texttt{anvala} (v0.1.0), an open-source Python library designed to provide R-equivalent latent variable and network psychometrics natively inside the PyTorch ecosystem. Across canonical integration benchmarks and three simulation studies, \texttt{anvala} matched R reference packages---\texttt{lavaan} (v0.7-2), \texttt{semTools} (v0.5-9), \texttt{EGAnet} (v2.4.1), and \texttt{BifactorIndicesCalculator} (v0.2.2)---within $10^{-16}$ to $10^{-5}$ while achieving $100\%$ convergence, negligible parameter bias ($< 5\%$), well-calibrated standard errors, and substantial GPU speedups for resampling workflows within Python.
+The present work introduced \texttt{anvala} (v0.1.0), an open-source Python library designed to provide R-equivalent latent variable and network psychometrics natively inside the PyTorch ecosystem. Across canonical integration benchmarks and three simulation studies, \texttt{anvala} matched R reference packages---\texttt{lavaan} (v0.7-2), \texttt{semTools} (v0.5-9), \texttt{EGAnet} (v2.4.1), and \texttt{BifactorIndicesCalculator} (v0.2.2)---within $10^{-16}$ to $10^{-5}$ across factor, ordinal, multi-group, bifactor, and network models (and within $1.10 \times 10^{-4}$ on the small-sample full SEM).
 
 Study 1 revealed clear architectural trade-offs across model dimensionalities ($p$) and hardware backends that translate directly into practical usage guidelines. In low-dimensional path mediation ($p = 3$, $q = 6$), stacking $B = 5{,}000$ double-precision (\texttt{float64}) covariance matrices yields a $360\text{ KB}$ tensor that resides inside CPU L2/L3 cache; consequently, vectorized CPU execution completed $5{,}000$ \texttt{BCa} resamples in $0.68\text{ s}$ ($151.50\times$ faster than 1-core \texttt{lavaan}), outperforming CUDA execution ($1.27\text{ s}$) by avoiding host-to-device memory transfer overhead. Expanding to latent variable mediation (Study 1B) pinpointed the empirical crossover at $p = 15$ indicators (a standard three-factor, five-item-per-factor model), where GPU batching ($9.49\text{ s}$) overtook Python CPU execution ($11.18\text{ s}$) and remained $2.26\times$ faster than default 1-core \texttt{lavaan} ($21.47\text{ s}$). At larger dimensionalities ($p = 30, 60$), GPU batching continued to accelerate Python execution by $2.03\times$ to $7.28\times$ over CPU, whereas \texttt{lavaan}'s compiled C++ analytical Kronecker Jacobians scaled more gradually than \texttt{anvala}'s general-purpose automatic-differentiation Jacobian tensor $\mathbf{J} \in \mathbb{R}^{B \times m \times q}$. A parallel distinction emerged in \texttt{boot\_ega} (Studies 1C and 1D): on typical psychometric scales ($p = 12$), GPU tensor batching accelerated Python execution by $21.65\times$ on the RTX 3060 and $32.77\times$ on the NVIDIA L4, whereas on large item pools ($p = 24, 48$), dense \texttt{float64} $O(p^3)$ eigendecompositions across $L = 100$ penalties (combined with hardware \texttt{float64} rate limits on consumer GeForce GPUs) made compiled Fortran coordinate descent in \texttt{EGAnet::bootEGA} faster in absolute wall-clock time. Researchers should therefore retain the default CPU path for single-model fits and small low-dimensional bootstrap models ($p < 15$), select \texttt{device="cuda"} for bootstrap latent variable models ($p \ge 15$) and standard-scale network stability ($p \le 15$) inside Python pipelines, and rely on compiled R backends when running massive bootstrap grids on high-dimensional networks ($p \ge 24$) outside Python workflows.
 

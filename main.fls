@@ -538,8 +538,6 @@ INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmbx
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmmib5.tfm
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/adobe/courier/pcrb8t.tfm
-INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
-INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/vf/adobe/courier/pcrb8t.vf
@@ -550,6 +548,8 @@ INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/vf/adobe/times/ptm
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/vf/adobe/courier/pcrro8t.vf
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/adobe/courier/pcrro8r.tfm
+INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
+INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
 INPUT main.aux
 INPUT ./main.out
 INPUT ./main.out

@@ -111,6 +111,41 @@
       \verb 10.1561/2200000016
       \endverb
     \endentry
+    \entry{bradley1978}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=53840cbac0689dcc928058eb0e265989}{%
+           family={Bradley},
+           familyi={B\bibinitperiod},
+           given={James\bibnamedelima V.},
+           giveni={J\bibinitperiod\bibinitdelim V\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{53840cbac0689dcc928058eb0e265989}
+      \strng{fullhash}{53840cbac0689dcc928058eb0e265989}
+      \strng{fullhashraw}{53840cbac0689dcc928058eb0e265989}
+      \strng{bibnamehash}{53840cbac0689dcc928058eb0e265989}
+      \strng{authorbibnamehash}{53840cbac0689dcc928058eb0e265989}
+      \strng{authornamehash}{53840cbac0689dcc928058eb0e265989}
+      \strng{authorfullhash}{53840cbac0689dcc928058eb0e265989}
+      \strng{authorfullhashraw}{53840cbac0689dcc928058eb0e265989}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{British Journal of Mathematical and Statistical Psychology}
+      \field{number}{2}
+      \field{title}{Robustness?}
+      \field{volume}{31}
+      \field{year}{1978}
+      \field{pages}{144\bibrangedash 152}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1111/j.2044-8317.1978.tb00581.x
+      \endverb
+    \endentry
     \entry{byrne1989}{article}{}{}
       \name{author}{3}{}{%
         {{un=0,uniquepart=base,hash=0a315bbabc9ac5889163e96c2a624471}{%
@@ -1712,6 +1747,41 @@
       \range{pages}{122}
       \verb{doi}
       \verb 10.1561/2200000016
+      \endverb
+    \endentry
+    \entry{bradley1978}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=53840cbac0689dcc928058eb0e265989}{%
+           family={Bradley},
+           familyi={B\bibinitperiod},
+           given={James\bibnamedelima V.},
+           giveni={J\bibinitperiod\bibinitdelim V\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{53840cbac0689dcc928058eb0e265989}
+      \strng{fullhash}{53840cbac0689dcc928058eb0e265989}
+      \strng{fullhashraw}{53840cbac0689dcc928058eb0e265989}
+      \strng{bibnamehash}{53840cbac0689dcc928058eb0e265989}
+      \strng{authorbibnamehash}{53840cbac0689dcc928058eb0e265989}
+      \strng{authornamehash}{53840cbac0689dcc928058eb0e265989}
+      \strng{authorfullhash}{53840cbac0689dcc928058eb0e265989}
+      \strng{authorfullhashraw}{53840cbac0689dcc928058eb0e265989}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{British Journal of Mathematical and Statistical Psychology}
+      \field{number}{2}
+      \field{title}{Robustness?}
+      \field{volume}{31}
+      \field{year}{1978}
+      \field{pages}{144\bibrangedash 152}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1111/j.2044-8317.1978.tb00581.x
       \endverb
     \endentry
     \entry{byrne1989}{article}{}{}
