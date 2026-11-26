@@ -1,5 +1,5 @@
-hardware,task,N,B,R_EGAnet_sec,anvala_CPU_sec,anvala_GPU_sec,speedup_GPU_vs_R,speedup_GPU_vs_CPU
-NVIDIA GeForce RTX 3060,bootEGA_12_items,400,100,7.38,50.3277,3.9609,1.86,12.71
-NVIDIA GeForce RTX 3060,bootEGA_12_items,400,250,12.58,125.1637,6.0261,2.09,20.77
-NVIDIA GeForce RTX 3060,bootEGA_12_items,400,500,20.5,253.5959,11.6546,1.76,21.76
-NVIDIA GeForce RTX 3060,bootEGA_12_items,400,1000,38.11,500.8294,22.6959,1.68,22.07
+hardware,task,p,N,B,R_EGAnet_1core_sec,R_EGAnet_6core_sec,anvala_CPU_1core_sec,anvala_CPU_6core_sec,anvala_GPU_sec,speedup_GPU_vs_R1,speedup_GPU_vs_R6,speedup_GPU_vs_CPU1,speedup_GPU_vs_CPU6
+NVIDIA GeForce RTX 3060,bootEGA_12_items,12,400,100,10.34,9.64,51.5301,67.1585,3.9808,2.6,2.42,12.94,16.87
+NVIDIA GeForce RTX 3060,bootEGA_12_items,12,400,250,6.58,7.0,128.8351,170.7324,6.024,1.09,1.16,21.39,28.34
+NVIDIA GeForce RTX 3060,bootEGA_12_items,12,400,500,9.6,9.41,261.6975,336.6097,12.0716,0.8,0.78,21.68,27.88
+NVIDIA GeForce RTX 3060,bootEGA_12_items,12,400,1000,17.42,9.3,517.5151,686.0403,23.9039,0.73,0.39,21.65,28.7

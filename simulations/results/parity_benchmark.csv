@@ -1,0 +1,14 @@
+domain,dataset,r_reference,metric,R_value,anvala_value,max_abs_diff
+CFA (ML),HS1939 (N=301),lavaan 0.7-2,lambda(visual=~x2),0.5535,0.5535,8.93e-07
+CFA (ML),HS1939 (N=301),lavaan 0.7-2,Chi-square (df=24),85.305522,85.305522,8.93e-07
+CFA (ML),HS1939 (N=301),lavaan 0.7-2,CFI / RMSEA,0.93056 / 0.09212,0.93056 / 0.09212,8.93e-07
+CFA (MLR),HS1939 (N=301),lavaan 0.7-2,Sandwich SE(visual=~x2),0.132078,0.132078,1.81e-05
+CFA (MLR),HS1939 (N=301),lavaan 0.7-2,Scaled Chi-sq / Robust CFI,87.13160 / 0.92986,87.13159 / 0.92986,1.81e-05
+SEM (ML),PolDem (N=75),lavaan 0.7-2,Path dem65 ~ dem60 (SE),0.83734 (0.09835),0.83734 (0.09835),1.10e-04
+SEM (ML),PolDem (N=75),lavaan 0.7-2,Chi-sq / CFI,38.12522 / 0.99537,38.12522 / 0.99537,1.10e-04
+Ordinal CFA (WLSMV),HS1939-Ord,lavaan 0.7-2,Polychoric lambda(visual=~x2),0.529921,0.529921,6.87e-08
+Ordinal CFA (WLSMV),HS1939-Ord,lavaan 0.7-2,Scaled Chi-sq / Robust CFI,83.38528 / 0.91790,83.38528 / 0.91790,1.99e-06
+Multi-Group (MLR),HS1939 (G=2),lavaan 0.7-2,Scalar Scaled Chi-sq / Robust CFI,166.74822 / 0.88115,166.74820 / 0.88115,1.75e-05
+Bifactor Indices,HS1939 (N=301),BifactorIndicesCalc 0.2-2,ECV / PUC / OmegaH,0.34444 / 0.75000 / 0.54680,0.34444 / 0.75000 / 0.54680,1.11e-16
+Network (EGA),HS1939 (N=301),EGAnet 2.4.1,Dimensions (K) / TEFI,3 / -5.15041,3 / -5.15041,8.88e-16
+Network (EGA),HS1939 (N=301),EGAnet 2.4.1,Partial Corr. Matrix (EBICglasso),9x9 matrix,9x9 matrix,2.54e-06

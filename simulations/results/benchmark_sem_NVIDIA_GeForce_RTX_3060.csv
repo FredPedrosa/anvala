@@ -1,6 +1,6 @@
-hardware,task,N,B,R_lavaan_sec,anvala_CPU_sec,anvala_GPU_sec,speedup_CPU_vs_R,speedup_GPU_vs_R
-NVIDIA GeForce RTX 3060,SEM_Mediation_Bootstrap_BCa,400,250,5.37,0.1258,0.2556,42.7,21.01
-NVIDIA GeForce RTX 3060,SEM_Mediation_Bootstrap_BCa,400,500,10.25,0.1256,0.3419,81.59,29.98
-NVIDIA GeForce RTX 3060,SEM_Mediation_Bootstrap_BCa,400,1000,20.26,0.1898,0.4777,106.74,42.41
-NVIDIA GeForce RTX 3060,SEM_Mediation_Bootstrap_BCa,400,2000,39.86,0.2979,0.6625,133.81,60.17
-NVIDIA GeForce RTX 3060,SEM_Mediation_Bootstrap_BCa,400,5000,100.66,0.6781,1.238,148.44,81.31
+hardware,torch_threads,task,p,N,B,R_lavaan_1core_sec,R_lavaan_6core_sec,anvala_CPU_sec,anvala_GPU_sec,speedup_CPU_vs_R1,speedup_GPU_vs_R1,speedup_GPU_vs_CPU
+NVIDIA GeForce RTX 3060,6,SEM_Path_Mediation_p3,3,400,250,5.23,3.09,0.1627,0.2391,32.14,21.88,0.68
+NVIDIA GeForce RTX 3060,6,SEM_Path_Mediation_p3,3,400,500,10.74,3.26,0.1281,0.3366,83.87,31.91,0.38
+NVIDIA GeForce RTX 3060,6,SEM_Path_Mediation_p3,3,400,1000,21.17,5.37,0.1786,0.4615,118.54,45.87,0.39
+NVIDIA GeForce RTX 3060,6,SEM_Path_Mediation_p3,3,400,2000,41.41,9.86,0.3031,0.6404,136.64,64.66,0.47
+NVIDIA GeForce RTX 3060,6,SEM_Path_Mediation_p3,3,400,5000,103.18,22.64,0.6811,1.2686,151.5,81.33,0.54

@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import os
 import time
@@ -55,7 +55,7 @@ def _summarize_replications(records: list[dict]) -> pd.DataFrame:
 
 def run_cfa_mlr_study(
     n_list: list[int] = [150, 300, 600],
-    n_reps: int = 200,
+    n_reps: int = 1000,
     seed: int = 2026,
 ) -> pd.DataFrame:
     """Estudo 2A: CFA Contínua Não-Normal com estimador robusto MLR."""
@@ -64,7 +64,6 @@ def run_cfa_mlr_study(
         F1 =~ x1 + x2 + x3
         F2 =~ x4 + x5 + x6
     """
-    # Covariância latente: Var(F1)=Var(F2)=0.64 (SD=0.80), Cov(F1,F2)=0.256 (r=0.40)
     psi = np.array([[0.64, 0.256], [0.256, 0.64]])
     l_psi = np.linalg.cholesky(psi)
 
@@ -91,6 +90,8 @@ def run_cfa_mlr_study(
     for n_obs in n_list:
         print(f"[Estudo 2A | CFA MLR Não-Normal] N = {n_obs} ({n_reps} réplicas)...", flush=True)
         for rep in range(n_reps):
+            if (rep + 1) % 250 == 0:
+                print(f"  -> {rep + 1}/{n_reps} réplicas concluídas", flush=True)
             z_f = _std_chisq3(rng, (n_obs, 2)) @ l_psi.T
             z_e = _std_chisq3(rng, (n_obs, 6)) * theta_sd
             x = z_f @ lam.T + z_e
@@ -121,15 +122,15 @@ def run_cfa_mlr_study(
 
 def run_cfa_ordinal_study(
     n_list: list[int] = [150, 300, 600],
-    n_reps: int = 200,
+    n_reps: int = 1000,
     seed: int = 3026,
 ) -> pd.DataFrame:
-    """Estudo 2B: CFA Ordinal (4 categorias) com estimador WLSMV."""
+    """Estudo 2B: CFA Ordinal (6 itens, 4 categorias) com estimador WLSMV."""
     rng = np.random.default_rng(seed)
-    model = "F1 =~ u1 + u2 + u3 + u4 + u5"
-    loadings = np.array([0.65, 0.70, 0.75, 0.80, 0.85])
+    model = "F1 =~ u1 + u2 + u3 + u4 + u5 + u6"
+    loadings = np.array([0.65, 0.70, 0.75, 0.80, 0.85, 0.70])
     err_sd = np.sqrt(1.0 - loadings**2)
-    taus = np.array([-1.1, 0.0, 1.1])
+    taus = np.array([-1.20, 0.00, 1.20])
 
     targets = [
         ("F1", "=~", "u1", "F1 =~ u1", 0.65),
@@ -141,10 +142,12 @@ def run_cfa_ordinal_study(
     for n_obs in n_list:
         print(f"[Estudo 2B | CFA Ordinal WLSMV] N = {n_obs} ({n_reps} réplicas)...", flush=True)
         for rep in range(n_reps):
+            if (rep + 1) % 250 == 0:
+                print(f"  -> {rep + 1}/{n_reps} réplicas concluídas", flush=True)
             f = rng.normal(size=(n_obs, 1))
-            y_star = f @ loadings[None, :] + rng.normal(scale=err_sd, size=(n_obs, 5))
+            y_star = f @ loadings[None, :] + rng.normal(scale=err_sd, size=(n_obs, 6))
             u = np.searchsorted(taus, y_star) + 1
-            df = pd.DataFrame(u, columns=[f"u{i + 1}" for i in range(5)])
+            df = pd.DataFrame(u, columns=[f"u{i + 1}" for i in range(6)])
 
             fit = av.cfa(model, data=df, estimator="WLSMV", ordered=True, std_lv=True)
             pe = fit.parameter_estimates()
@@ -171,7 +174,7 @@ def run_cfa_ordinal_study(
 
 def run_mediation_bca_study(
     n_list: list[int] = [150, 300, 600],
-    n_reps: int = 200,
+    n_reps: int = 1000,
     n_boot: int = 400,
     seed: int = 4026,
 ) -> pd.DataFrame:
@@ -196,6 +199,8 @@ def run_mediation_bca_study(
     for n_obs in n_list:
         print(f"[Estudo 2C | Mediação BCa (B={n_boot})] N = {n_obs} ({n_reps} réplicas)...", flush=True)
         for rep in range(n_reps):
+            if (rep + 1) % 250 == 0:
+                print(f"  -> {rep + 1}/{n_reps} réplicas concluídas", flush=True)
             x = rng.normal(size=n_obs)
             m = a_true * x + rng.normal(size=n_obs)
             y = b_true * m + c_true * x + rng.normal(size=n_obs)

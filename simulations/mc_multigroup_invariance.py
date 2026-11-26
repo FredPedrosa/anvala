@@ -39,7 +39,7 @@ def _sim_two_groups(
 
 def run_invariance_error_and_power(
     n_list: list[int] = [150, 300],
-    n_reps: int = 200,
+    n_reps: int = 1000,
     seed: int = 5026,
 ) -> pd.DataFrame:
     """Estudos 3A (Erro Tipo I) e 3B (Poder sob não-invariância métrica/escalar)."""
@@ -54,6 +54,8 @@ def run_invariance_error_and_power(
         for n_grp in n_list:
             print(f"[{cond_name}] N_grupo = {n_grp} ({n_reps} réplicas)...", flush=True)
             for rep in range(n_reps):
+                if (rep + 1) % 250 == 0:
+                    print(f"  -> {rep + 1}/{n_reps} réplicas concluídas", flush=True)
                 df = _sim_two_groups(rng, n_grp, lam2=lam2, nu2=nu2, kappa2=0.0)
                 inv = av.multigroup.measurement_invariance(MODEL_MG, df, group="grp", estimator="ML")
                 tbl = inv.table.set_index("model")
@@ -89,7 +91,7 @@ def run_invariance_error_and_power(
 
 def run_partial_invariance_study(
     n_list: list[int] = [150, 300],
-    n_reps: int = 200,
+    n_reps: int = 1000,
     seed: int = 6026,
 ) -> pd.DataFrame:
     """Estudo 3C: Recuperação de média latente (kappa2 = 0.50) sob Escalar Completa vs. Parcial."""
@@ -97,12 +99,14 @@ def run_partial_invariance_study(
     lam2 = np.array([0.80, 0.75, 0.40, 0.75])
     nu2 = np.array([0.0, 0.0, 0.50, 0.0])
     kappa2_dgp = 0.50
-    kappa2_true = 0.80 * kappa2_dgp  # 0.40 na m?trica do indicador marcador x1 (lambda_1 = 0.80)
+    kappa2_true = 0.80 * kappa2_dgp
 
     records = []
     for n_grp in n_list:
         print(f"[3C_Partial_Invariance_LatentMean] N_grupo = {n_grp} ({n_reps} réplicas)...", flush=True)
         for rep in range(n_reps):
+            if (rep + 1) % 250 == 0:
+                print(f"  -> {rep + 1}/{n_reps} réplicas concluídas", flush=True)
             df = _sim_two_groups(rng, n_grp, lam2=lam2, nu2=nu2, kappa2=kappa2_dgp)
 
             specs = [

@@ -1,0 +1,4 @@
+hardware,p,N,B,R_EGAnet_1core_sec,R_EGAnet_6core_sec,anvala_GPU_sec,speedup_GPU_vs_R1,speedup_GPU_vs_R6
+NVIDIA GeForce RTX 3060,12,400,500,13.78,10.21,11.1846,1.23,0.91
+NVIDIA GeForce RTX 3060,24,400,500,17.85,9.04,59.6761,0.3,0.15
+NVIDIA GeForce RTX 3060,48,400,500,115.86,26.93,2267.6511,0.05,0.01

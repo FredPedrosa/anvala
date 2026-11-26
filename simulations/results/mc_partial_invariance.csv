@@ -1,5 +1,5 @@
 model_spec,N_per_group,true_kappa2,mean_est,rel_bias_pct,mean_se,rmse,coverage_95
-Full_Scalar_Misspecified,150,0.4,0.4586,14.65,0.1005,0.1188,0.89
-Partial_Scalar_Correct,150,0.4,0.3874,-3.16,0.1027,0.1049,0.94
-Full_Scalar_Misspecified,300,0.4,0.4787,19.69,0.0716,0.1102,0.785
-Partial_Scalar_Correct,300,0.4,0.4101,2.53,0.0731,0.0793,0.945
+Full_Scalar_Misspecified,150,0.4,0.4657,16.43,0.1009,0.1249,0.883
+Partial_Scalar_Correct,150,0.4,0.397,-0.74,0.1031,0.108,0.938
+Full_Scalar_Misspecified,300,0.4,0.4687,17.18,0.0715,0.097,0.847
+Partial_Scalar_Correct,300,0.4,0.3989,-0.27,0.073,0.0699,0.959

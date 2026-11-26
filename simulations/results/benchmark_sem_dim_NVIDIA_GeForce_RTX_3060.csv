@@ -1,0 +1,5 @@
+hardware,torch_threads,task,p,N,B,R_lavaan_1core_sec,R_lavaan_6core_sec,anvala_CPU_sec,anvala_GPU_sec,speedup_GPU_vs_R1,speedup_GPU_vs_R6,speedup_GPU_vs_CPU
+NVIDIA GeForce RTX 3060,6,SEM_Latent_Mediation_3F,6,400,1000,19.07,5.07,3.5072,3.5814,5.32,1.42,0.98
+NVIDIA GeForce RTX 3060,6,SEM_Latent_Mediation_3F,15,400,1000,21.47,5.63,11.1828,9.4948,2.26,0.59,1.18
+NVIDIA GeForce RTX 3060,6,SEM_Latent_Mediation_3F,30,400,1000,26.64,6.62,59.8436,29.439,0.9,0.22,2.03
+NVIDIA GeForce RTX 3060,6,SEM_Latent_Mediation_3F,60,400,1000,52.53,12.72,756.5857,103.9788,0.51,0.12,7.28
