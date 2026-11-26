@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.11.25)  26 NOV 2026 10:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.11.25)  26 NOV 2026 11:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1055,15 +1055,15 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 35071 strings out of 468859
- 661871 string characters out of 5449732
- 1729679 words of memory out of 5000000
- 63428 multiletter control sequences out of 15000+600000
- 695438 words of font info for 313 fonts, out of 8000000 for 9000
+ 35070 strings out of 468859
+ 661857 string characters out of 5449732
+ 1729674 words of memory out of 5000000
+ 63427 multiletter control sequences out of 15000+600000
+ 695435 words of font info for 313 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  92i,12n,104p,2351b,5052s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (26 pages, 350901 bytes).
+Output written on main.pdf (26 pages, 350911 bytes).
 PDF statistics:
  492 PDF objects out of 1000 (max. 8388607)
  415 compressed objects within 5 object streams
