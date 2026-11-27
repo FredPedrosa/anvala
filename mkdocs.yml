@@ -1,0 +1,99 @@
+site_name: anvala
+site_description: GPU-Accelerated Psychometrics, Structural Equation Modeling, and Network Psychometrics in Python
+site_url: https://fredpedrosa.github.io/anvala/
+repo_url: https://github.com/FredPedrosa/anvala
+repo_name: FredPedrosa/anvala
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+extra_javascript:
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+plugins:
+  - search
+
+# Optional: When ready to add Portuguese (PT-BR) translations, install
+# `mkdocs-static-i18n` and uncomment the block below:
+# - i18n:
+#     docs_structure: suffix
+#     languages:
+#       - locale: en
+#         default: true
+#         name: English
+#         build: true
+#       - locale: pt
+#         name: Português (BR)
+#         build: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation & GPU Setup: getting-started/installation.md
+      - lavaan Model Syntax: getting-started/lavaan-syntax.md
+      - R to Python Rosetta Stone: getting-started/r-to-python.md
+  - Tutorials & Colab:
+      - 0. Complete Tour (All Functions): tutorials/00-complete-tour.md
+      - 1. Continuous & Ordinal CFA, Scoring & Diagnostics: tutorials/01-cfa-and-diagnostics.md
+      - 2. SEM, Mediation & GPU BCa Bootstrap: tutorials/02-sem-and-bootstrap.md
+      - 3. Multi-Group Measurement Invariance: tutorials/03-measurement-invariance.md
+      - 4. EFA, Dimensionality, Reliability & Bifactor: tutorials/04-efa-reliability-bifactor.md
+      - 5. Network Psychometrics (EGA, UVA & GPU bootEGA): tutorials/05-network-psychometrics.md
+  - CRAN-Style Reference:
+      - Function & Class Index: reference/index.md
+      - CFA (cfa, AnvalaFit): reference/cfa.md
+      - SEM (sem, SEMFit): reference/sem.md
+      - Multi-Group & Invariance: reference/multigroup.md
+      - Factor Scores (predict): reference/predict.md
+      - GPU Bootstrap (bootstrap_ci): reference/bootstrap.md
+      - Local Diagnostics (residuals, modindices): reference/diagnostics.md
+      - EFA & Dimensionality (efa, dimtests, kmo_bartlett): reference/efa.md
+      - Polychoric Correlations (polychoric): reference/polychoric.md
+      - Reliability, HTMT & Bifactor: reference/reliability-bifactor.md
+      - Network Psychometrics (ega, uva, boot_ega): reference/network.md
