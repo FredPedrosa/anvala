@@ -1,14 +1,35 @@
 # anvala
 
+[![Docs](https://img.shields.io/badge/Docs-GitHub%20Pages-indigo.svg)](https://fredpedrosa.github.io/anvala/)
+[![Open Complete Tour in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/FredPedrosa/anvala/blob/main/notebooks/00_anvala_complete_tour.ipynb)
+[![Reference Manual PDF](https://img.shields.io/badge/Manual-CRAN--Style%20PDF-b31b1b.svg)](https://fredpedrosa.github.io/anvala/assets/anvala-reference-manual.pdf)
+[![PyPI](https://img.shields.io/pypi/v/anvala.svg)](https://pypi.org/project/anvala/)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.24507587-blue.svg)](https://doi.org/10.5281/zenodo.24507587)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/FredPedrosa/anvala/blob/main/LICENSE)
+
 **anvala** is a Python library for psychometrics, Structural Equation Modeling (SEM), and Network Psychometrics designed for numerical parity with R’s [`lavaan`](https://lavaan.ugent.be/), [`EGAnet`](https://github.com/hfgolino/EGAnet), and [`BifactorIndicesCalculator`](https://cran.r-project.org/package=BifactorIndicesCalculator), featuring PyTorch automatic differentiation and CUDA GPU acceleration for resampling and batched ADMM optimization.
+
+## Documentation & Interactive Tutorials
+
+- **Documentation Website:** [fredpedrosa.github.io/anvala](https://fredpedrosa.github.io/anvala/)
+- **CRAN-Style Reference Manual (PDF):** [Download `anvala-reference-manual.pdf`](https://fredpedrosa.github.io/anvala/assets/anvala-reference-manual.pdf)
+- **R (`lavaan` / `EGAnet` / `semTools`) to Python Rosetta Stone:** [Translation Guide](https://fredpedrosa.github.io/anvala/getting-started/r-to-python/)
+- **Interactive Google Colab Notebooks (Free T4 GPU):**
+  - [00 — Complete End-to-End Tour (All Functions)](https://colab.research.google.com/github/FredPedrosa/anvala/blob/main/notebooks/00_anvala_complete_tour.ipynb)
+  - [01 — Continuous & Ordinal CFA, Factor Scoring & Local Diagnostics](https://colab.research.google.com/github/FredPedrosa/anvala/blob/main/notebooks/01_cfa_ordinal_and_scoring.ipynb)
+  - [02 — SEM, Mediation & GPU BCa Bootstrap](https://colab.research.google.com/github/FredPedrosa/anvala/blob/main/notebooks/02_sem_mediation_gpu_bootstrap.ipynb)
+  - [03 — Multi-Group Measurement Invariance & Score Tests](https://colab.research.google.com/github/FredPedrosa/anvala/blob/main/notebooks/03_multigroup_invariance.ipynb)
+  - [04 — EFA, Dimensionality Tests, Reliability, HTMT & Bifactor Indices](https://colab.research.google.com/github/FredPedrosa/anvala/blob/main/notebooks/04_efa_reliability_bifactor.ipynb)
+  - [05 — Network Psychometrics (EGA, UVA, TEFI & GPU `boot_ega`)](https://colab.research.google.com/github/FredPedrosa/anvala/blob/main/notebooks/05_network_psychometrics_ega.ipynb)
 
 ## Key Features
 
-- **CFA & SEM (`cfa`, `sem`)**: Continuous (`ML`, `MLR` with Yuan-Bentler / Satorra-Bentler robust corrections) and ordinal (`WLSMV` delta parameterization via polychoric correlations) estimation using `lavaan` syntax (`=~`, `~`, `~~`, parameter labels, and `:=` defined parameters).
+- **CFA & SEM (`cfa`, `sem`)**: Continuous (`ML`, `MLR` with Yuan-Bentler / Satorra-Bentler robust corrections) and ordinal (`WLSMV` delta parameterization via polychoric correlations) estimation using `lavaan` syntax (`=~`, `~`, `~~`, parameter labels, and `:=` defined parameters), plus local diagnostics (`residuals`, `modindices`).
 - **Multi-Group CFA & Measurement Invariance (`cfa_multigroup`, `measurement_invariance`)**: Automated `configural` -> `metric` -> `scalar` -> `strict` invariance testing, partial invariance (`group_partial`), scaled likelihood-ratio tests (`compare_models`), and Lagrange multiplier tests (`score_test`, matching `lavTestScore`).
-- **Factor Scores (`predict`)**: Empirical Bayes Modal (`EBM`) and Expected A Posteriori (`EAP`) latent score estimation with standard errors for continuous and ordinal indicators.
+- **Factor Scores (`predict`)**: Regression, Bartlett, Anderson-Rubin, and Green scores for continuous models, plus Empirical Bayes Modal (`EBM`), `ML`, and Expected A Posteriori (`EAP`) latent score estimation with standard errors for ordinal indicators.
+- **EFA & Dimensionality Tests (`efa`, `dimtests`, `kmo_bartlett`)**: Continuous (`ML`, `MLR`, `ULS`, `DWLS`) and ordinal (`WLSMV`) EFA with multi-start GPA rotations (`geomin`, `oblimin`, `promax`, `varimax`, etc.), rotated SEs, KMO/Bartlett adequacy, and an 8-method dimensionality battery (`RAWPAR`, `EMPKC`, `HULL`, `SMT`, `MAP`, `CD`).
 - **Network Psychometrics (`ega`, `boot_ega`, `uva`)**: Exploratory Graph Analysis via vectorized `EBICglasso` + Walktrap/Louvain, Unique Variable Analysis (`uva`), network loadings (`compute_net_loads`), `compute_tefi`, and GPU-accelerated `boot_ega`.
-- **Reliability & Bifactor Indices (`reliability`, `bifactor_indices`, `htmt`)**: Cronbach’s alpha, McDonald’s omega (total and hierarchical), Average Variance Extracted (AVE), HTMT discriminant validity, and ECV/PUC/FD/H bifactor indices.
+- **Reliability & Bifactor Indices (`reliability`, `bifactor_indices`, `htmt`)**: McDonald’s omega, Green & Yang (2009) categorical omega, optional Cronbach’s alpha (`cronbach_alpha`), Average Variance Extracted (AVE), HTMT/HTMT2 discriminant validity, and ECV/PUC/FD/H/IECV/ARPB bifactor indices.
 - **GPU-Accelerated Bootstrap (`bootstrap_ci`, `boot_ega`)**: Vectorized 3D tensor optimization on CUDA (with automatic CPU fallback) for nonparametric and `BCa` confidence intervals, including mediation indirect effects.
 
 ## Installation
@@ -47,7 +68,7 @@ print(fit.parameter_estimates())
 
 # WLSMV for ordinal (Likert) indicators + EBM factor scores
 fit_ord = av.cfa(model, data=df_likert, estimator="WLSMV", ordered=True)
-scores, se = fit_ord.predict(method="EBM", return_se=True)
+scores, se = fit_ord.predict(method="ebm", se=True)
 ```
 
 ### 2. SEM Mediation & GPU Bootstrap Confidence Intervals
